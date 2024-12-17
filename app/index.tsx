@@ -1,4 +1,5 @@
 import { GlaringSegment } from '@/components/GlaringSegment';
+import { GradientButton } from '@/components/GradientButton';
 import { StyleSheet, SafeAreaView, Text } from 'react-native';
 
 export default function MainScreen() {
@@ -6,6 +7,7 @@ export default function MainScreen() {
     <SafeAreaView style={styles.container}>
       <GlaringSegment style={styles.segment} >
         <Text style={styles.heading}>Hello</Text>
+        <GradientButton style={styles.buttonSignUp}>Create an account</GradientButton>
       </GlaringSegment>
     </SafeAreaView>
   );
@@ -27,5 +29,8 @@ const styles = StyleSheet.create({
   },
   segment: {
     margin: 24
-  }
+  },
+  buttonSignUp: {
+    marginTop: 12,
+  },
 });
