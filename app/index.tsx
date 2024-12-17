@@ -9,6 +9,7 @@ export default function MainScreen() {
       <GlaringSegment style={styles.segment} >
         <Text style={styles.heading}>Hello</Text>
         <GlowingButton>Log in</GlowingButton>
+        <Text style={styles.text}>Just getting started?</Text>
         <GradientButton style={styles.buttonSignUp}>Create an account</GradientButton>
       </GlaringSegment>
     </SafeAreaView>
@@ -34,5 +35,11 @@ const styles = StyleSheet.create({
   },
   buttonSignUp: {
     marginTop: 12,
+  },
+  text: {
+    marginTop: 16,
+    color: 'white',
+    textAlign: 'center',
+    opacity: 0.6,
   },
 });
