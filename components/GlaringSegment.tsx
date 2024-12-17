@@ -21,5 +21,12 @@ export const GlaringSegment: React.FC<Props> = ({
 const styles = StyleSheet.create({
   segmentContainer: {},
   segment: {
+    zIndex: 1,
+    paddingHorizontal: 12,
+    paddingVertical: 36,
+    borderWidth: 6,
+    borderColor: '#282828',
+    borderRadius: 10,
+    backgroundColor: '#303030',
   },
 });
