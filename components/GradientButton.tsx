@@ -1,5 +1,8 @@
 import React, {
   PropsWithChildren,
+  useLayoutEffect,
+  useRef,
+  useState,
 } from 'react';
 import {
   StyleSheet,
@@ -17,12 +20,25 @@ type ButtonProps = PropsWithChildren<{
   style?: StyleProp<ViewStyle>;
 }>;
 export const GradientButton: React.FC<ButtonProps> = ({ children, style, onPress }) => {
-  const buttonWidth = 300
-  const buttonHeight = 200
+  const [buttonWidth, setButtonWidth] = useState<number>(100);
+  const [buttonHeight, setButtonHeight] = useState<number>(100);
+  const refContainer = useRef<View>(null);
+  const refSvg = useRef(null);
+
+  useLayoutEffect(() => {
+    if (refContainer.current) {
+      // @ts-ignore
+      const { width, height } = refContainer.current.unstable_getBoundingClientRect();
+      setButtonWidth(width);
+      setButtonHeight(height);
+    }
+  }, []);
+
   return (
     <View style={style}>
       <Pressable
         style={styles.button}
+        ref={refContainer}
         onPress={onPress}>
         <Svg
           style={[styles.buttonSvg, { width: buttonWidth, height: buttonHeight }]}
@@ -52,7 +68,7 @@ export const GradientButton: React.FC<ButtonProps> = ({ children, style, onPress
 const styles = StyleSheet.create({
   button: {
     position: 'relative',
-    // overflow: 'hidden',
+    overflow: 'hidden',
     margin: 10,
     padding: 0,
     backgroundColor: '#3d7aed',
