@@ -14,6 +14,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
+import { InnerReflextionEffect } from './InnerReflectionEffect';
 
 type ButtonProps = PropsWithChildren<{
   onPress?: (event: GestureResponderEvent) => void;
@@ -49,6 +50,11 @@ export const GlowingButton: React.FC<ButtonProps> = ({ children, style, onPress 
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
         onPress={onPress}>
+        <InnerReflextionEffect
+          width={buttonWidth}
+          height={buttonHeight}
+          opacity={0.5}
+        />
         <Svg
           style={[styles.buttonSvg, { width: buttonWidth - 2, height: buttonHeight - 2 }]}
           viewBox={`0 0 ${buttonWidth - 2} ${buttonHeight - 2}`}>
@@ -83,7 +89,7 @@ const styles = StyleSheet.create({
   },
   button: {
     position: 'relative',
-    overflow: 'hidden',
+    // overflow: 'hidden',
     height: 44,
     padding: 0,
     backgroundColor: '#303030',
