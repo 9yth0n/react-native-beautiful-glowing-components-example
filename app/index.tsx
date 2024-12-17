@@ -2,11 +2,16 @@ import { FormInput } from '@/components/FormInput';
 import { GlaringSegment } from '@/components/GlaringSegment';
 import { GlowingButton } from '@/components/GlowingButton';
 import { GradientButton } from '@/components/GradientButton';
-import { StyleSheet, SafeAreaView, Text } from 'react-native';
+import { StyleSheet, SafeAreaView, Text, Image } from 'react-native';
 
 export default function MainScreen() {
   return (
     <SafeAreaView style={styles.container}>
+      <Image
+        source={require('@/components/images/logo.png')}
+        resizeMode="contain"
+        style={styles.logoImage}
+      />
       <GlaringSegment style={styles.segment} >
         <Text style={styles.heading}>Hello</Text>
         <FormInput placeholder="Email address" />
@@ -44,5 +49,9 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     opacity: 0.6,
+  },
+  logoImage: {
+    width: 160,
+    height: 160,
   },
 });
