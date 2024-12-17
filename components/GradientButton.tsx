@@ -10,17 +10,39 @@ import {
   StyleProp,
   ViewStyle,
 } from 'react-native';
+import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 
 type ButtonProps = PropsWithChildren<{
   onPress?: (event: GestureResponderEvent) => void;
   style?: StyleProp<ViewStyle>;
 }>;
 export const GradientButton: React.FC<ButtonProps> = ({ children, style, onPress }) => {
+  const buttonWidth = 300
+  const buttonHeight = 200
   return (
     <View style={style}>
       <Pressable
         style={styles.button}
         onPress={onPress}>
+        <Svg
+          style={[styles.buttonSvg, { width: buttonWidth, height: buttonHeight }]}
+          viewBox={`0 0 ${buttonWidth} ${buttonHeight}`}>
+          <Defs>
+            <LinearGradient id="grad" x1="0" y1="0" x2="0" y2="1">
+              <Stop
+                offset="0"
+                stopColor="hsla(0, 0%, 100%, 0.16)"
+                stopOpacity="0.16"
+              />
+              <Stop
+                offset="1"
+                stopColor="hsla(0, 0%, 100%, 0)"
+                stopOpacity="0.0"
+              />
+            </LinearGradient>
+          </Defs>
+          <Rect x="0" y="0" width="100%" height="100%" fill="url(#grad)" />
+        </Svg>
         <Text style={[styles.buttonTitle]}>{children}</Text>
       </Pressable>
     </View>
@@ -30,7 +52,7 @@ export const GradientButton: React.FC<ButtonProps> = ({ children, style, onPress
 const styles = StyleSheet.create({
   button: {
     position: 'relative',
-    overflow: 'hidden',
+    // overflow: 'hidden',
     margin: 10,
     padding: 0,
     backgroundColor: '#3d7aed',
@@ -53,5 +75,9 @@ const styles = StyleSheet.create({
     textShadowRadius: 1,
     textShadowOffset: { width: 0, height: -1 },
     textShadowColor: 'hsla(0, 0%, 0%, 0.1)',
+  },
+  buttonSvg: {
+    overflow: 'hidden',
+    position: 'absolute',
   },
 });
