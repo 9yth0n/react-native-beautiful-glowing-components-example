@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'hsl(221 20% 11%)',
+    justifyContent: 'center'
   },
   heading: {
     opacity: 0.8,
