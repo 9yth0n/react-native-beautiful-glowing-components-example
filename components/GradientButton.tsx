@@ -35,6 +35,10 @@ const styles = StyleSheet.create({
     padding: 0,
     backgroundColor: '#3d7aed',
     borderRadius: 8,
+    boxShadow: `
+      0 1px 2px 0 rgba(12, 43, 100, 0.32),
+      0 6px 16px 0 rgba(12, 43, 100, 0.32)
+    `,
   },
   buttonTitle: {
     color: 'white',
