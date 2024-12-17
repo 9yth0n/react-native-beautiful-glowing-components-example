@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 import { InnerReflextionEffect } from './InnerReflectionEffect';
+import { OuterGlowEffect } from './OuterGlowEffect';
 
 type ButtonProps = PropsWithChildren<{
   onPress?: (event: GestureResponderEvent) => void;
@@ -78,6 +79,11 @@ export const GlowingButton: React.FC<ButtonProps> = ({ children, style, onPress 
         </Svg>
         <Text style={[styles.buttonTitle]}>{children}</Text>
       </Pressable>
+      <OuterGlowEffect
+        width={buttonWidth}
+        height={buttonHeight}
+        opacity={0.8}
+      />
     </View>
   );
 };
