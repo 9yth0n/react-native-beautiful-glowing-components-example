@@ -42,7 +42,7 @@ export const GlowingButton: React.FC<ButtonProps> = ({ children, style, onPress 
   };
 
   return (
-    <View style={style}>
+    <View style={[style, styles.container]}>
       <Pressable
         style={styles.button}
         ref={refContainer}
@@ -57,7 +57,7 @@ export const GlowingButton: React.FC<ButtonProps> = ({ children, style, onPress 
               <Stop
                 offset="0"
                 stopColor="hsla(0, 0%, 100%, 0.16)"
-                stopOpacity="0.16"
+                stopOpacity="0.25"
               />
               <Stop
                 offset="1"
@@ -77,20 +77,20 @@ export const GlowingButton: React.FC<ButtonProps> = ({ children, style, onPress 
 };
 
 const styles = StyleSheet.create({
+  container: {
+    margin: 10,
+  },
   button: {
     position: 'relative',
     overflow: 'hidden',
-    margin: 10,
+    height: 44,
     padding: 0,
-    backgroundColor: '#3d7aed',
+    backgroundColor: '#303030',
     borderRadius: 8,
-    borderWidth: 1,
-    borderColor: 'hsla(0, 0%, 100%, 0.3)',
-    // outline: '1px solid hsla(0, 0%, 100%, 0.3)',
     boxShadow: `
-      0 0 0 1px #3d7aed,
-      0 1px 2px 0 rgba(12, 43, 100, 0.32),
-      0 6px 16px 0 rgba(12, 43, 100, 0.32)
+      0 0 0 1px #303030,
+      0 1px 2px 0 rgba(0, 0, 0, 0.32),
+      0 6px 16px 0 rgba(0, 0, 0, 0.32)
     `,
   },
   buttonTitle: {
@@ -106,5 +106,6 @@ const styles = StyleSheet.create({
   buttonSvg: {
     overflow: 'hidden',
     position: 'absolute',
+    backgroundColor: '#303030',
   },
 });
