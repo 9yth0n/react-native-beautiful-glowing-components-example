@@ -28,5 +28,6 @@ const styles = StyleSheet.create({
     borderColor: '#282828',
     borderRadius: 10,
     backgroundColor: '#303030',
+    boxShadow: '0 0 0 1 rgba(255, 255, 255, 0.2)',
   },
 });
