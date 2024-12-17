@@ -20,10 +20,10 @@ type ButtonProps = PropsWithChildren<{
   style?: StyleProp<ViewStyle>;
 }>;
 export const GradientButton: React.FC<ButtonProps> = ({ children, style, onPress }) => {
+  const [pressed, setPressed] = useState<boolean>(false);
   const [buttonWidth, setButtonWidth] = useState<number>(100);
   const [buttonHeight, setButtonHeight] = useState<number>(100);
   const refContainer = useRef<View>(null);
-  const refSvg = useRef(null);
 
   useLayoutEffect(() => {
     if (refContainer.current) {
@@ -34,11 +34,20 @@ export const GradientButton: React.FC<ButtonProps> = ({ children, style, onPress
     }
   }, []);
 
+  const handlePressIn = () => {
+    setPressed(true);
+  };
+  const handlePressOut = () => {
+    setPressed(false);
+  };
+
   return (
     <View style={style}>
       <Pressable
         style={styles.button}
         ref={refContainer}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
         onPress={onPress}>
         <Svg
           style={[styles.buttonSvg, { width: buttonWidth, height: buttonHeight }]}
@@ -57,7 +66,9 @@ export const GradientButton: React.FC<ButtonProps> = ({ children, style, onPress
               />
             </LinearGradient>
           </Defs>
-          <Rect x="0" y="0" width="100%" height="100%" fill="url(#grad)" />
+          {!pressed && (
+            <Rect x="0" y="0" width="100%" height="100%" fill="url(#grad)" />
+          )}
         </Svg>
         <Text style={[styles.buttonTitle]}>{children}</Text>
       </Pressable>
