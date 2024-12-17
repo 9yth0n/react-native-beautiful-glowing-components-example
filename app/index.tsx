@@ -1,3 +1,4 @@
+import { FormInput } from '@/components/FormInput';
 import { GlaringSegment } from '@/components/GlaringSegment';
 import { GlowingButton } from '@/components/GlowingButton';
 import { GradientButton } from '@/components/GradientButton';
@@ -8,6 +9,8 @@ export default function MainScreen() {
     <SafeAreaView style={styles.container}>
       <GlaringSegment style={styles.segment} >
         <Text style={styles.heading}>Hello</Text>
+        <FormInput placeholder="Email address" />
+        <FormInput placeholder="Password" secureTextEntry />
         <GlowingButton>Log in</GlowingButton>
         <Text style={styles.text}>Just getting started?</Text>
         <GradientButton style={styles.buttonSignUp}>Create an account</GradientButton>
