@@ -1,5 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { MotiView } from 'moti';
+import { Easing } from 'react-native-reanimated';
 
 type ButtonProps = PropsWithChildren<{
   width: number;
@@ -20,20 +22,42 @@ export const OuterGlowEffect: React.FC<ButtonProps> = ({
         {
           width,
           height,
+          transform: [{ scaleY: 0.3 }],
         },
       ]}>
-      <View
+      <MotiView
         style={[
-          styles.positionAbsolute,
-          styles.bloom,
+          styles.innerBorder,
           {
-            left: glareSize / 3,
-            top: glareSize / 2,
-            width: 1,
-            height: 1,
+            top: (height - glareSize) / 2,
+            left: (width - glareSize) / 2,
+            width: glareSize,
+            height: glareSize,
+            opacity,
           },
         ]}
-      />
+        from={{ rotate: '0deg' }}
+        animate={{ rotate: '360deg' }}
+        transition={{
+          loop: true,
+          type: 'timing',
+          repeatReverse: false,
+          duration: 10000,
+          easing: Easing.linear,
+        }}>
+        <View
+          style={[
+            styles.positionAbsolute,
+            styles.bloom,
+            {
+              left: glareSize / 3,
+              top: glareSize / 2,
+              width: 1,
+              height: 1,
+            },
+          ]}
+        />
+      </MotiView>
     </View>
   );
 };
