@@ -23,14 +23,24 @@ export default function MainScreen() {
           style={styles.logoImage}
         />
       </MotiView>
-      <GlaringSegment style={styles.segment} >
-        <Text style={styles.heading}>Hello</Text>
-        <FormInput placeholder="Email address" />
-        <FormInput placeholder="Password" secureTextEntry />
-        <GlowingButton>Log in</GlowingButton>
-        <Text style={styles.text}>Just getting started?</Text>
-        <GradientButton style={styles.buttonSignUp}>Create an account</GradientButton>
-      </GlaringSegment>
+      <MotiView
+        style={styles.formContainer}
+        from={{ translateY: 10, opacity: 0 }}
+        animate={{ translateY: 0, opacity: 1 }}
+        transition={{
+          type: 'timing',
+          duration: 1200,
+          delay: 800,
+        }}>
+        <GlaringSegment style={styles.segment} >
+          <Text style={styles.heading}>Hello</Text>
+          <FormInput placeholder="Email address" />
+          <FormInput placeholder="Password" secureTextEntry />
+          <GlowingButton>Log in</GlowingButton>
+          <Text style={styles.text}>Just getting started?</Text>
+          <GradientButton style={styles.buttonSignUp}>Create an account</GradientButton>
+        </GlaringSegment>
+      </MotiView>
     </SafeAreaView>
   );
 }
@@ -48,6 +58,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
     marginBottom: 24,
+  },
+  formContainer: {
+    flex: 1,
+    padding: 12,
   },
   segment: {
     margin: 24
