@@ -50,8 +50,8 @@ export const GlowingButton: React.FC<ButtonProps> = ({ children, style, onPress 
         onPressOut={handlePressOut}
         onPress={onPress}>
         <Svg
-          style={[styles.buttonSvg, { width: buttonWidth, height: buttonHeight }]}
-          viewBox={`0 0 ${buttonWidth} ${buttonHeight}`}>
+          style={[styles.buttonSvg, { width: buttonWidth - 2, height: buttonHeight - 2 }]}
+          viewBox={`0 0 ${buttonWidth - 2} ${buttonHeight - 2}`}>
           <Defs>
             <LinearGradient id="grad" x1="0" y1="0" x2="0" y2="1">
               <Stop
@@ -79,6 +79,7 @@ export const GlowingButton: React.FC<ButtonProps> = ({ children, style, onPress 
 const styles = StyleSheet.create({
   container: {
     margin: 10,
+    // backgroundColor: 'white'
   },
   button: {
     position: 'relative',
@@ -94,6 +95,7 @@ const styles = StyleSheet.create({
     `,
   },
   buttonTitle: {
+    zIndex: 3,
     color: 'white',
     textAlign: 'center',
     fontWeight: 'bold',
@@ -107,5 +109,9 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     position: 'absolute',
     backgroundColor: '#303030',
+    borderRadius: 7,
+    left: 1,
+    top: 1,
+    zIndex: 2,
   },
 });
