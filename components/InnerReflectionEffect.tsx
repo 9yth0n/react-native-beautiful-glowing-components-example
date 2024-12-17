@@ -1,6 +1,8 @@
 import React, { PropsWithChildren } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
+import { MotiView } from 'moti';
+import { Easing } from 'react-native-reanimated';
 
 type ButtonProps = PropsWithChildren<{
   width: number;
@@ -15,7 +17,7 @@ export const InnerReflextionEffect: React.FC<ButtonProps> = ({
 }) => {
   const glareSize = width * 1.2;
   return (
-    <View
+    <MotiView
       style={[
         styles.positionAbsolute,
         styles.innerBorder,
@@ -27,7 +29,15 @@ export const InnerReflextionEffect: React.FC<ButtonProps> = ({
           opacity,
         },
       ]}
-    >
+      from={{ rotate: '0deg' }}
+      animate={{ rotate: '360deg' }}
+      transition={{
+        loop: true,
+        type: 'timing',
+        repeatReverse: false,
+        duration: 10000,
+        easing: Easing.linear,
+      }}>
       <Svg
         style={[styles.positionAbsolute]}
         viewBox={`0 0 ${glareSize} ${glareSize}`}>
@@ -57,7 +67,7 @@ export const InnerReflextionEffect: React.FC<ButtonProps> = ({
         </Defs>
         <Rect x="0" y="0" width="100%" height="100%" fill="url(#grad)" />
       </Svg>
-    </View>
+    </MotiView>
   );
 };
 

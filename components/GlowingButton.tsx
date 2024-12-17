@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   },
   button: {
     position: 'relative',
-    // overflow: 'hidden',
+    overflow: 'hidden',
     height: 44,
     padding: 0,
     backgroundColor: '#303030',
