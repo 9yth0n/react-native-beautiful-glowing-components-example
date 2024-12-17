@@ -14,6 +14,12 @@ export const GlaringSegment: React.FC<Props> = ({
   return (
     <View style={[styles.segmentContainer, style]}>
       <View style={[styles.segment, contentStyle]}>{children}</View>
+      <View style={styles.footer}>
+        <View style={[styles.bloom]} />
+        <View style={[styles.bloom]} />
+        <View style={[styles.bloom]} />
+        <View style={[styles.bloom]} />
+      </View>
     </View>
   );
 };
@@ -29,5 +35,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: '#303030',
     boxShadow: '0 0 0 1 rgba(255, 255, 255, 0.2)',
+  },
+  footer: {
+    overflow: 'hidden',
+    zIndex: 1,
+    width: '100%',
+    height: 100,
+  },
+  bloom: {
+    position: 'absolute',
+    height: 1,
   },
 });
