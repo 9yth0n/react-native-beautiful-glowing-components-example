@@ -12,6 +12,7 @@ import {
   GestureResponderEvent,
   StyleProp,
   ViewStyle,
+  LayoutChangeEvent,
 } from 'react-native';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 
@@ -19,20 +20,17 @@ type ButtonProps = PropsWithChildren<{
   onPress?: (event: GestureResponderEvent) => void;
   style?: StyleProp<ViewStyle>;
 }>;
+
 export const GradientButton: React.FC<ButtonProps> = ({ children, style, onPress }) => {
   const [pressed, setPressed] = useState<boolean>(false);
   const [buttonWidth, setButtonWidth] = useState<number>(100);
   const [buttonHeight, setButtonHeight] = useState<number>(100);
-  const refContainer = useRef<View>(null);
 
-  useLayoutEffect(() => {
-    if (refContainer.current) {
-      // @ts-ignore
-      const { width, height } = refContainer.current.unstable_getBoundingClientRect();
-      setButtonWidth(width);
-      setButtonHeight(height);
-    }
-  }, []);
+  const handleLayout = (event: LayoutChangeEvent) => {
+    const { width, height } = event.nativeEvent.layout;
+    setButtonWidth(width);
+    setButtonHeight(height);
+  };
 
   const handlePressIn = () => {
     setPressed(true);
@@ -45,7 +43,7 @@ export const GradientButton: React.FC<ButtonProps> = ({ children, style, onPress
     <View style={style}>
       <Pressable
         style={styles.button}
-        ref={refContainer}
+        onLayout={handleLayout}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
         onPress={onPress}>
