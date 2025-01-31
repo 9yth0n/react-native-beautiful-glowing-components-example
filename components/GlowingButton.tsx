@@ -6,7 +6,6 @@ import React, {
 } from 'react';
 import {
   StyleSheet,
-  Text,
   Pressable,
   View,
   GestureResponderEvent,
@@ -15,18 +14,45 @@ import {
   LayoutChangeEvent,
 } from 'react-native';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
-import { InnerReflextionEffect } from './InnerReflectionEffect';
+// Fix the import name
+import { InnerReflextionEffect, RotatingGlare } from './InnerReflextionEffect';  // Updated path to match file name
 import { OuterGlowEffect } from './OuterGlowEffect';
+import { Stack, styled, Text } from 'tamagui'
+import { MotiView } from 'moti';
 
 type ButtonProps = PropsWithChildren<{
   onPress?: (event: GestureResponderEvent) => void;
   style?: StyleProp<ViewStyle>;
 }>;
 
+const StyledPressable = styled(Pressable, {
+  position: 'relative',
+  overflow: 'hidden',
+  height: 56,
+  padding: 0,
+  backgroundColor: '#4F46E5',  // Start with purple
+  borderRadius: 12,
+  shadowColor: '#4F46E5',
+  shadowOffset: { width: 0, height: 0 },
+  shadowOpacity: 0.7,
+  shadowRadius: 20,
+  elevation: 8,
+})
+
+const StyledText = styled(Text, {
+  color: 'Silver',
+  textAlign: 'center',
+  fontWeight: 'regular',
+  fontSize: 20,
+  margin: 8,
+  zIndex: 0,
+})
+
 export const GlowingButton: React.FC<ButtonProps> = ({ children, style, onPress }) => {
-  const [pressed, setPressed] = useState<boolean>(false);
-  const [buttonWidth, setButtonWidth] = useState<number>(100);
-  const [buttonHeight, setButtonHeight] = useState<number>(100);
+  const [pressed, setPressed] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [buttonWidth, setButtonWidth] = useState(100);
+  const [buttonHeight, setButtonHeight] = useState(56);
 
   const handleLayout = (event: LayoutChangeEvent) => {
     const { width, height } = event.nativeEvent.layout;
@@ -34,95 +60,53 @@ export const GlowingButton: React.FC<ButtonProps> = ({ children, style, onPress 
     setButtonHeight(height);
   };
 
-  const handlePressIn = () => {
-    setPressed(true);
-  };
-  const handlePressOut = () => {
-    setPressed(false);
-  };
-
   return (
-    <View style={[style, styles.container]}>
-      <Pressable
-        style={styles.button}
-        onLayout={handleLayout}
-        onPressIn={handlePressIn}
-        onPressOut={handlePressOut}
-        onPress={onPress}>
-        {/* Rest of the component remains the same */}
-        <InnerReflextionEffect
-          width={buttonWidth}
-          height={buttonHeight}
-          opacity={0.5}
-        />
-        <Svg
-          style={[styles.buttonSvg, { width: buttonWidth - 2, height: buttonHeight - 2 }]}
-          viewBox={`0 0 ${buttonWidth - 2} ${buttonHeight - 2}`}>
-          <Defs>
-            <LinearGradient id="grad" x1="0" y1="0" x2="0" y2="1">
-              <Stop
-                offset="0"
-                stopColor="hsla(0, 0%, 100%, 0.16)"
-                stopOpacity="0.25"
-              />
-              <Stop
-                offset="1"
-                stopColor="hsla(0, 0%, 100%, 0)"
-                stopOpacity="0.0"
-              />
-            </LinearGradient>
-          </Defs>
-          {!pressed && (
-            <Rect x="0" y="0" width="100%" height="100%" fill="url(#grad)" />
-          )}
-        </Svg>
-        <Text style={[styles.buttonTitle]}>{children}</Text>
-      </Pressable>
-      <OuterGlowEffect
-        width={buttonWidth}
-        height={buttonHeight}
-        opacity={0.8}
-      />
-    </View>
+    <MotiView
+      from={{
+        shadowColor: '#4F46E5',
+        shadowOffset: { width: -15, height: 0 },
+        shadowOpacity: 0.5,
+        shadowRadius: 20,
+      }}
+      animate={{
+        shadowColor: '#4F46E5',
+        shadowOffset: { width: 15, height: 0 },
+        shadowOpacity: 0.5,
+        shadowRadius: 20,
+      }}
+      transition={{
+        type: 'timing',
+        duration: 3000,
+        loop: true,
+      }}
+      style={{ margin: 10 }}>
+      // ... then in the component:
+            <StyledPressable
+              style={[
+                style,
+                styles.button,
+                {
+                  backgroundColor: pressed ? '#303030' : '#4F46E5',
+                  transition: 'background-color 150ms ease',
+                }
+              ]}
+              onLayout={handleLayout}
+              onPressIn={() => setPressed(true)}
+              onPressOut={() => setPressed(false)}
+              onPress={onPress}>
+              <OuterGlowEffect width={buttonWidth} height={buttonHeight} />
+              <StyledText>{children}</StyledText>
+            </StyledPressable>
+    </MotiView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    margin: 10,
-    // backgroundColor: 'white'
-  },
   button: {
-    position: 'relative',
-    overflow: 'hidden',
-    height: 44,
-    padding: 0,
-    backgroundColor: '#303030',
-    borderRadius: 8,
-    boxShadow: `
-      0 0 0 1px #303030,
-      0 1px 2px 0 rgba(0, 0, 0, 0.32),
-      0 6px 16px 0 rgba(0, 0, 0, 0.32)
-    `,
-  },
-  buttonTitle: {
-    zIndex: 3,
-    color: 'white',
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 20,
-    margin: 8,
-    textShadowRadius: 1,
-    textShadowOffset: { width: 0, height: -1 },
-    textShadowColor: 'hsla(0, 0%, 0%, 0.1)',
-  },
-  buttonSvg: {
-    overflow: 'hidden',
-    position: 'absolute',
-    backgroundColor: '#303030',
-    borderRadius: 7,
-    left: 1,
-    top: 1,
-    zIndex: 2,
-  },
+    shadowColor: '#4F46E5',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 8,
+    elevation: 8,
+  }
 });
